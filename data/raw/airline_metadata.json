@@ -1,0 +1,9 @@
+{
+  "dataset":"AirPassengers",
+  "source":"R datasets package via statsmodels",
+  "frequency":"monthly",
+  "download_date":"2026-08-17T17:45:08.202654",
+  "n_observations":144,
+  "start_date":"1949-01-01",
+  "end_date":"1960-12-01"
+}

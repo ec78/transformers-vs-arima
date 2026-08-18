@@ -1,0 +1,10 @@
+{
+  "dataset":"SPY",
+  "source":"Yahoo Finance",
+  "ticker":"SPY",
+  "frequency":"daily",
+  "download_date":"2026-08-17T17:58:10.070684",
+  "n_observations":8444,
+  "start_date":"1993-01-29",
+  "end_date":"2026-08-17"
+}

@@ -1,0 +1,13 @@
+{
+  "dataset":"EIA hourly electricity demand",
+  "source":"U.S. Energy Information Administration",
+  "balancing_authority":"CISO",
+  "series_type":"demand",
+  "frequency":"hourly",
+  "start_year":2019,
+  "end_year":2026,
+  "download_date":"2026-08-17T17:50:54.180758",
+  "n_observations":66841,
+  "start_date":"2019-01-01 00:00:00+00:00",
+  "end_date":"2026-08-18 00:00:00+00:00"
+}
