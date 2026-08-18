@@ -357,6 +357,7 @@ def walk_forward_evaluate(
     window="expanding",
     window_size=None,
     model_kwargs=None,
+    mase_seasonality=1,
 ):
     """
     Run walk-forward forecasting evaluation.
@@ -411,6 +412,10 @@ def walk_forward_evaluate(
     model_kwargs : dict or None
         Additional model-specific arguments.
 
+    mase_seasonality : int, default=1
+        Lag used to construct the origin-specific
+        MASE scale from the training sample.
+
     Returns
     -------
     pandas.DataFrame
@@ -432,6 +437,11 @@ def walk_forward_evaluate(
 
     if model_kwargs is None:
         model_kwargs = {}
+
+    if mase_seasonality <= 0:
+        raise ValueError(
+            "mase_seasonality must be positive."
+        )
 
     horizons = sorted(
         set(horizons)
@@ -519,14 +529,25 @@ def walk_forward_evaluate(
             origin - 1
         ][target_col]
 
+        train_values = np.asarray(
+            train,
+            dtype=float,
+        )
+
+        if len(train_values) <= mase_seasonality:
+            raise ValueError(
+                "Training sample must contain more "
+                "observations than mase_seasonality."
+            )
+
         mase_scale = np.mean(
             np.abs(
-                np.diff(
-                    np.asarray(
-                        train,
-                        dtype=float,
-                    )
-                )
+                train_values[
+                    mase_seasonality:
+                ]
+                - train_values[
+                    :-mase_seasonality
+                ]
             )
         )
 

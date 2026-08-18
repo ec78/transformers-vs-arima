@@ -456,6 +456,421 @@ def arima_log_price_forecast(
         "parameters": parameters,
     }
 
+
+# ---------------------------------------------------------
+# General transformed ARIMA forecast
+# ---------------------------------------------------------
+
+def arima_transformed_forecast(
+    train,
+    horizon=1,
+    order=(0, 1, 1),
+    seasonal_order=(0, 0, 0, 0),
+    trend="n",
+    log_transform=False,
+    seasonal_difference=None,
+    low_memory=False,
+):
+    """
+    Forecast levels using an ARIMA model fitted to an
+    optional log or seasonally differenced log series.
+
+    A seasonal difference is reconstructed from observed
+    training values, so the requested horizon cannot exceed
+    the seasonal difference lag.
+    """
+
+    if len(train) < 2:
+        raise ValueError(
+            "Training series must contain at least "
+            "two observations."
+        )
+
+    values = np.asarray(
+        train,
+        dtype=float,
+    )
+
+    if not np.all(
+        np.isfinite(values)
+    ):
+        raise ValueError(
+            "Training series contains non-finite values."
+        )
+
+    if (
+        log_transform
+        and np.any(values <= 0)
+    ):
+        raise ValueError(
+            "Log transformation requires strictly "
+            "positive values."
+        )
+
+    transformed = (
+        np.log(values)
+        if log_transform
+        else values.copy()
+    )
+
+    if seasonal_difference is not None:
+        if seasonal_difference <= 0:
+            raise ValueError(
+                "seasonal_difference must be positive."
+            )
+
+        if len(transformed) <= seasonal_difference:
+            raise ValueError(
+                "Training series must contain more "
+                "observations than seasonal_difference."
+            )
+
+        if horizon > seasonal_difference:
+            raise ValueError(
+                "horizon cannot exceed seasonal_difference."
+            )
+
+        model_values = (
+            transformed[seasonal_difference:]
+            - transformed[:-seasonal_difference]
+        )
+    else:
+        model_values = transformed
+
+    model = ARIMA(
+        model_values,
+        order=order,
+        seasonal_order=seasonal_order,
+        trend=trend,
+    )
+
+    def fit_model(start_params=None):
+        return model.fit(
+            start_params=start_params,
+            method_kwargs={
+                "method": "lbfgs",
+                "maxiter": 1000,
+                "disp": 0,
+            },
+            low_memory=low_memory,
+        )
+
+    def get_mle_retval(
+        results,
+        *names,
+    ):
+        mle_retvals = getattr(
+            results,
+            "mle_retvals",
+            None,
+        )
+
+        for name in names:
+            if hasattr(mle_retvals, "get"):
+                value = mle_retvals.get(
+                    name,
+                    None,
+                )
+            else:
+                value = getattr(
+                    mle_retvals,
+                    name,
+                    None,
+                )
+
+            if value is not None:
+                return value
+
+        return np.nan
+
+    def parameter_dict(results):
+        return {
+            name: float(value)
+            for name, value in zip(
+                results.param_names,
+                results.params,
+            )
+        }
+
+    initial_fitted = fit_model()
+
+    initial_converged = get_mle_retval(
+        initial_fitted,
+        "converged",
+    )
+
+    initial_iterations = get_mle_retval(
+        initial_fitted,
+        "iterations",
+        "nit",
+    )
+
+    initial_warnflag = get_mle_retval(
+        initial_fitted,
+        "warnflag",
+        "status",
+    )
+
+    initial_objective_value = get_mle_retval(
+        initial_fitted,
+        "fopt",
+        "fun",
+        "objective",
+    )
+
+    initial_optimizer_message = get_mle_retval(
+        initial_fitted,
+        "message",
+        "task",
+    )
+
+    initial_optimizer_status = get_mle_retval(
+        initial_fitted,
+        "status",
+    )
+
+    fitted = initial_fitted
+    retry_attempted = False
+    retry_accepted = False
+    retry_count = 0
+    retry_parameter = None
+    retry_parameter_offset = np.nan
+    retry_converged = np.nan
+    retry_iterations = np.nan
+    retry_warnflag = np.nan
+    retry_objective_value = np.nan
+    retry_optimizer_message = np.nan
+    retry_optimizer_status = np.nan
+    retry_history = []
+
+    if not bool(initial_converged):
+        retry_names = [
+            name
+            for name in initial_fitted.param_names
+            if name not in {
+                "sigma2",
+            }
+        ]
+
+        if retry_names:
+            retry_attempted = True
+            retry_parameter = retry_names[0]
+            retry_index = (
+                initial_fitted.param_names.index(
+                    retry_parameter
+                )
+            )
+
+            for parameter_offset in [
+                1e-6,
+                0.5e-6,
+            ]:
+                retry_count += 1
+                retry_parameter_offset = parameter_offset
+
+                retry_start_params = np.asarray(
+                    initial_fitted.params,
+                    dtype=float,
+                ).copy()
+
+                retry_start_params[
+                    retry_index
+                ] += parameter_offset
+
+                retry_fitted = fit_model(
+                    start_params=retry_start_params
+                )
+
+                retry_converged = get_mle_retval(
+                    retry_fitted,
+                    "converged",
+                )
+
+                retry_iterations = get_mle_retval(
+                    retry_fitted,
+                    "iterations",
+                    "nit",
+                )
+
+                retry_warnflag = get_mle_retval(
+                    retry_fitted,
+                    "warnflag",
+                    "status",
+                )
+
+                retry_objective_value = get_mle_retval(
+                    retry_fitted,
+                    "fopt",
+                    "fun",
+                    "objective",
+                )
+
+                retry_optimizer_message = get_mle_retval(
+                    retry_fitted,
+                    "message",
+                    "task",
+                )
+
+                retry_optimizer_status = get_mle_retval(
+                    retry_fitted,
+                    "status",
+                )
+
+                retry_history.append(
+                    {
+                        "attempt": retry_count,
+                        "parameter": retry_parameter,
+                        "parameter_offset": parameter_offset,
+                        "converged": bool(
+                            retry_converged
+                        ),
+                        "iterations": float(
+                            retry_iterations
+                        ),
+                        "warnflag": float(
+                            retry_warnflag
+                        ),
+                        "objective_value": float(
+                            retry_objective_value
+                        ),
+                    }
+                )
+
+                if (
+                    bool(retry_converged)
+                    and np.isfinite(
+                        initial_objective_value
+                    )
+                    and np.isfinite(
+                        retry_objective_value
+                    )
+                    and retry_objective_value
+                    <= initial_objective_value
+                ):
+                    fitted = retry_fitted
+                    retry_accepted = True
+                    break
+
+    model_forecast = np.asarray(
+        fitted.forecast(
+            steps=horizon
+        ),
+        dtype=float,
+    )
+
+    if seasonal_difference is not None:
+        transformed_forecast = (
+            model_forecast
+            + transformed[
+                -seasonal_difference:
+            ][:horizon]
+        )
+    else:
+        transformed_forecast = model_forecast
+
+    forecast = (
+        np.exp(transformed_forecast)
+        if log_transform
+        else transformed_forecast
+    )
+
+    converged = get_mle_retval(
+        fitted,
+        "converged",
+    )
+
+    iterations = get_mle_retval(
+        fitted,
+        "iterations",
+        "nit",
+    )
+
+    warnflag = get_mle_retval(
+        fitted,
+        "warnflag",
+        "status",
+    )
+
+    objective_value = get_mle_retval(
+        fitted,
+        "fopt",
+        "fun",
+        "objective",
+    )
+
+    optimizer_message = get_mle_retval(
+        fitted,
+        "message",
+        "task",
+    )
+
+    optimizer_status = get_mle_retval(
+        fitted,
+        "status",
+    )
+
+    parameters = parameter_dict(
+        fitted
+    )
+
+    return {
+        "forecast": forecast,
+        "converged": converged,
+        "iterations": iterations,
+        "warnflag": warnflag,
+        "objective_value": objective_value,
+        "optimizer_message": optimizer_message,
+        "optimizer_status": optimizer_status,
+        "initial_converged": initial_converged,
+        "initial_iterations": initial_iterations,
+        "initial_warnflag": initial_warnflag,
+        "initial_objective_value": (
+            initial_objective_value
+        ),
+        "initial_optimizer_message": (
+            initial_optimizer_message
+        ),
+        "initial_optimizer_status": (
+            initial_optimizer_status
+        ),
+        "initial_parameters": parameter_dict(
+            initial_fitted
+        ),
+        "retry_attempted": retry_attempted,
+        "retry_accepted": retry_accepted,
+        "retry_count": retry_count,
+        "retry_parameter": retry_parameter,
+        "retry_parameter_offset": (
+            retry_parameter_offset
+        ),
+        "retry_converged": retry_converged,
+        "retry_iterations": retry_iterations,
+        "retry_warnflag": retry_warnflag,
+        "retry_objective_value": (
+            retry_objective_value
+        ),
+        "retry_optimizer_message": (
+            retry_optimizer_message
+        ),
+        "retry_optimizer_status": (
+            retry_optimizer_status
+        ),
+        "retry_history": retry_history,
+        "forecast_is_finite": bool(
+            np.all(
+                np.isfinite(forecast)
+            )
+        ),
+        "parameters_are_finite": bool(
+            np.all(
+                np.isfinite(
+                    list(parameters.values())
+                )
+            )
+        ),
+        "parameters": parameters,
+    }
+
 # ---------------------------------------------------------
 # Naive forecast
 # ---------------------------------------------------------

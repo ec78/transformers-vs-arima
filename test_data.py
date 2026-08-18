@@ -59,7 +59,6 @@ print("=" * 60)
 
 electricity = load_electricity(
     balancing_authority="CISO",
-    start_year=2019,
 )
 
 print(electricity.head())
