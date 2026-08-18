@@ -168,6 +168,69 @@ arima_convergence_summary = (
     )
 )
 
+arima_initial_results = (
+    arima_results.copy()
+)
+
+arima_initial_results[
+    "converged"
+] = arima_initial_results[
+    "initial_converged"
+]
+
+arima_initial_results[
+    "iterations"
+] = arima_initial_results[
+    "initial_iterations"
+]
+
+arima_initial_convergence_summary = (
+    summarize_convergence_diagnostics(
+        arima_initial_results
+    )
+)
+
+arima_fit_diagnostics = (
+    arima_results
+    .groupby(
+        "origin",
+        as_index=False,
+    )
+    .first()
+    [
+        [
+            "origin",
+            "initial_converged",
+            "initial_iterations",
+            "initial_warnflag",
+            "initial_objective_value",
+            "initial_optimizer_message",
+            "initial_optimizer_status",
+            "initial_parameters",
+            "retry_attempted",
+            "retry_accepted",
+            "retry_count",
+            "retry_drift_offset",
+            "retry_converged",
+            "retry_iterations",
+            "retry_warnflag",
+            "retry_objective_value",
+            "retry_optimizer_message",
+            "retry_optimizer_status",
+            "retry_history",
+            "converged",
+            "iterations",
+            "warnflag",
+            "objective_value",
+            "optimizer_message",
+            "optimizer_status",
+            "parameters",
+            "forecast_is_finite",
+            "parameters_are_finite",
+        ]
+    ]
+)
+
 
 # =========================================================
 # Combine results
@@ -229,6 +292,22 @@ print(
 )
 
 print(
+    "Initial non-converged:",
+    (
+        ~arima_fit_diagnostics[
+            "initial_converged"
+        ].astype(bool)
+    ).sum()
+)
+
+print(
+    "Retries accepted:",
+    arima_fit_diagnostics[
+        "retry_accepted"
+    ].sum()
+)
+
+print(
     "Converged:",
     arima_convergence.sum()
 )
@@ -253,6 +332,17 @@ print(
     )
 )
 
+print()
+print(
+    "ACCURACY BY INITIAL CONVERGENCE STATUS"
+)
+print()
+print(
+    arima_initial_convergence_summary.to_string(
+        index=False
+    )
+)
+
 
 # ---------------------------------------------------------
 # Save outputs
@@ -273,6 +363,18 @@ all_summary.to_csv(
 arima_convergence_summary.to_csv(
     METRICS_DIR
     / "spy_arima_convergence.csv",
+    index=False,
+)
+
+arima_initial_convergence_summary.to_csv(
+    METRICS_DIR
+    / "spy_arima_initial_convergence.csv",
+    index=False,
+)
+
+arima_fit_diagnostics.to_csv(
+    METRICS_DIR
+    / "spy_arima_fit_diagnostics.csv",
     index=False,
 )
 
