@@ -1,0 +1,28 @@
+# Python virtual environment
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Python testing/cache
+.pytest_cache/
+.mypy_cache/
+
+# Environment variables / secrets
+.env
+*.env
+
+# Model checkpoints (we may generate these later)
+checkpoints/
