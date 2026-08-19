@@ -1,0 +1,35 @@
+check,passed,details
+unique forecast keys,True,duplicate rows=0
+finite saved forecasts and scales,True,rows=5724
+positive MASE scales,True,all origin-specific scales must be positive
+saved scaled errors,True,abs(actual - forecast) / mase_scale
+origin-relative directions,True,direction equals sign(value - origin_actual)
+SPY model set,True,"ARIMA(0,1,2)+drift, Chronos-2, Naive, PatchTST"
+SPY / PatchTST frozen contract,True,"origins=380; horizons=[1, 5, 20]; rows=1140"
+"SPY / ARIMA(0,1,2)+drift frozen contract",True,"origins=380; horizons=[1, 5, 20]; rows=1140"
+SPY / Naive frozen contract,True,"origins=380; horizons=[1, 5, 20]; rows=1140"
+SPY / Chronos-2 frozen contract,True,"origins=380; horizons=[1, 5, 20]; rows=1140"
+"SPY / ARIMA(0,1,2)+drift target alignment",True,"origin, forecast_date, horizon, origin_actual, actual, mase_scale"
+SPY / PatchTST target alignment,True,"origin, forecast_date, horizon, origin_actual, actual, mase_scale"
+SPY / Chronos-2 target alignment,True,"origin, forecast_date, horizon, origin_actual, actual, mase_scale"
+Airline model set,True,"Chronos-2, Log ARIMA(0,1,1)(0,1,1)[12], Naive, PatchTST"
+Airline / PatchTST frozen contract,True,"origins=13; horizons=[1, 3, 12]; rows=39"
+"Airline / Log ARIMA(0,1,1)(0,1,1)[12] frozen contract",True,"origins=13; horizons=[1, 3, 12]; rows=39"
+Airline / Naive frozen contract,True,"origins=13; horizons=[1, 3, 12]; rows=39"
+Airline / Chronos-2 frozen contract,True,"origins=13; horizons=[1, 3, 12]; rows=39"
+"Airline / Log ARIMA(0,1,1)(0,1,1)[12] target alignment",True,"origin, forecast_date, horizon, origin_actual, actual, mase_scale"
+Airline / PatchTST target alignment,True,"origin, forecast_date, horizon, origin_actual, actual, mase_scale"
+Airline / Chronos-2 target alignment,True,"origin, forecast_date, horizon, origin_actual, actual, mase_scale"
+Electricity-CISO model set,True,"Chronos-2, Log weekly-difference ARIMA(2,0,2), Naive, PatchTST"
+Electricity-CISO / PatchTST frozen contract,True,"origins=84; horizons=[1, 24, 168]; rows=252"
+"Electricity-CISO / Log weekly-difference ARIMA(2,0,2) frozen contract",True,"origins=84; horizons=[1, 24, 168]; rows=252"
+Electricity-CISO / Naive frozen contract,True,"origins=84; horizons=[1, 24, 168]; rows=252"
+Electricity-CISO / Chronos-2 frozen contract,True,"origins=84; horizons=[1, 24, 168]; rows=252"
+"Electricity-CISO / Log weekly-difference ARIMA(2,0,2) target alignment",True,"origin, forecast_date, horizon, origin_actual, actual, mase_scale"
+Electricity-CISO / PatchTST target alignment,True,"origin, forecast_date, horizon, origin_actual, actual, mase_scale"
+Electricity-CISO / Chronos-2 target alignment,True,"origin, forecast_date, horizon, origin_actual, actual, mase_scale"
+recomputed n_forecasts matches frozen metrics,True,maximum absolute difference=0.0
+recomputed rmse matches frozen metrics,True,maximum absolute difference=9.094947017729282e-13
+recomputed mae matches frozen metrics,True,maximum absolute difference=9.094947017729282e-13
+recomputed mase matches frozen metrics,True,maximum absolute difference=1.7763568394002505e-15
+recomputed directional_accuracy matches frozen metrics,True,maximum absolute difference=1.1102230246251565e-16

@@ -1,0 +1,13 @@
+model_family,metric,n_dataset_horizon_wins
+Naive,rmse,1
+Naive,mae,1
+Naive,mase,1
+ARIMA/SARIMA,rmse,5
+ARIMA/SARIMA,mae,5
+ARIMA/SARIMA,mase,5
+Chronos-2,rmse,3
+Chronos-2,mae,3
+Chronos-2,mase,3
+PatchTST,rmse,0
+PatchTST,mae,0
+PatchTST,mase,0

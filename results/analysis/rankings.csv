@@ -1,0 +1,109 @@
+dataset,horizon,metric,model,model_family,value,rank
+Airline,1,mae,"Log ARIMA(0,1,1)(0,1,1)[12]",ARIMA/SARIMA,8.504595305596315,1
+Airline,1,mae,Chronos-2,Chronos-2,10.606276292067312,2
+Airline,1,mae,Naive,Naive,40.76923076923077,3
+Airline,1,mae,PatchTST,PatchTST,67.89648907001202,4
+Airline,1,mase,"Log ARIMA(0,1,1)(0,1,1)[12]",ARIMA/SARIMA,0.2927226005774429,1
+Airline,1,mase,Chronos-2,Chronos-2,0.36363995077280326,2
+Airline,1,mase,Naive,Naive,1.3924771096431374,3
+Airline,1,mase,PatchTST,PatchTST,2.3302340262686565,4
+Airline,1,rmse,"Log ARIMA(0,1,1)(0,1,1)[12]",ARIMA/SARIMA,10.034463954950066,1
+Airline,1,rmse,Chronos-2,Chronos-2,13.852603266609547,2
+Airline,1,rmse,Naive,Naive,48.513281290162816,3
+Airline,1,rmse,PatchTST,PatchTST,87.73722289707807,4
+Airline,3,mae,"Log ARIMA(0,1,1)(0,1,1)[12]",ARIMA/SARIMA,13.364993361506537,1
+Airline,3,mae,Chronos-2,Chronos-2,16.49643179086538,2
+Airline,3,mae,PatchTST,PatchTST,71.96363713191106,3
+Airline,3,mae,Naive,Naive,76.76923076923077,4
+Airline,3,mase,"Log ARIMA(0,1,1)(0,1,1)[12]",ARIMA/SARIMA,0.455901512707991,1
+Airline,3,mase,Chronos-2,Chronos-2,0.562060116029945,2
+Airline,3,mase,PatchTST,PatchTST,2.4858584287267687,3
+Airline,3,mase,Naive,Naive,2.6376097449184104,4
+Airline,3,rmse,"Log ARIMA(0,1,1)(0,1,1)[12]",ARIMA/SARIMA,18.079355057739193,1
+Airline,3,rmse,Chronos-2,Chronos-2,22.17024892215352,2
+Airline,3,rmse,PatchTST,PatchTST,89.7498296745643,3
+Airline,3,rmse,Naive,Naive,96.95121691623298,4
+Airline,12,mae,"Log ARIMA(0,1,1)(0,1,1)[12]",ARIMA/SARIMA,18.913375958317822,1
+Airline,12,mae,Chronos-2,Chronos-2,22.86082810621995,2
+Airline,12,mae,Naive,Naive,49.38461538461539,3
+Airline,12,mae,PatchTST,PatchTST,80.89342557466946,4
+Airline,12,mase,"Log ARIMA(0,1,1)(0,1,1)[12]",ARIMA/SARIMA,0.6514390119612603,1
+Airline,12,mase,Chronos-2,Chronos-2,0.7886000509860037,2
+Airline,12,mase,Naive,Naive,1.693633852570854,3
+Airline,12,mase,PatchTST,PatchTST,2.7651922103850817,4
+Airline,12,rmse,"Log ARIMA(0,1,1)(0,1,1)[12]",ARIMA/SARIMA,21.253868437910487,1
+Airline,12,rmse,Chronos-2,Chronos-2,26.428231366771264,2
+Airline,12,rmse,Naive,Naive,52.24204024758958,3
+Airline,12,rmse,PatchTST,PatchTST,102.05587966195131,4
+Electricity-CISO,1,mae,Chronos-2,Chronos-2,430.1655738467262,1
+Electricity-CISO,1,mae,"Log weekly-difference ARIMA(2,0,2)",ARIMA/SARIMA,719.7194734626048,2
+Electricity-CISO,1,mae,Naive,Naive,791.0595238095239,3
+Electricity-CISO,1,mae,PatchTST,PatchTST,1911.0755440848213,4
+Electricity-CISO,1,mase,Chronos-2,Chronos-2,0.24525831323049158,1
+Electricity-CISO,1,mase,"Log weekly-difference ARIMA(2,0,2)",ARIMA/SARIMA,0.4102051231920589,2
+Electricity-CISO,1,mase,Naive,Naive,0.4508576576398839,3
+Electricity-CISO,1,mase,PatchTST,PatchTST,1.0877095435250836,4
+Electricity-CISO,1,rmse,Chronos-2,Chronos-2,554.7672363229608,1
+Electricity-CISO,1,rmse,"Log weekly-difference ARIMA(2,0,2)",ARIMA/SARIMA,940.7677811350792,2
+Electricity-CISO,1,rmse,Naive,Naive,1036.5176875802297,3
+Electricity-CISO,1,rmse,PatchTST,PatchTST,2742.1475610886678,4
+Electricity-CISO,24,mae,Chronos-2,Chronos-2,1190.5470145089287,1
+Electricity-CISO,24,mae,Naive,Naive,1267.857142857143,2
+Electricity-CISO,24,mae,PatchTST,PatchTST,2070.6043061755954,3
+Electricity-CISO,24,mae,"Log weekly-difference ARIMA(2,0,2)",ARIMA/SARIMA,2409.2128044432793,4
+Electricity-CISO,24,mase,Chronos-2,Chronos-2,0.6780148245372043,1
+Electricity-CISO,24,mase,Naive,Naive,0.7219853484705245,2
+Electricity-CISO,24,mase,PatchTST,PatchTST,1.1787303398197229,3
+Electricity-CISO,24,mase,"Log weekly-difference ARIMA(2,0,2)",ARIMA/SARIMA,1.3723774712960488,4
+Electricity-CISO,24,rmse,Chronos-2,Chronos-2,1558.8431948257005,1
+Electricity-CISO,24,rmse,Naive,Naive,1579.5395576830972,2
+Electricity-CISO,24,rmse,PatchTST,PatchTST,2859.0314711891783,3
+Electricity-CISO,24,rmse,"Log weekly-difference ARIMA(2,0,2)",ARIMA/SARIMA,3102.451284602406,4
+Electricity-CISO,168,mae,Chronos-2,Chronos-2,1834.9540318080358,1
+Electricity-CISO,168,mae,Naive,Naive,2165.214285714286,2
+Electricity-CISO,168,mae,"Log weekly-difference ARIMA(2,0,2)",ARIMA/SARIMA,2165.605001367442,3
+Electricity-CISO,168,mae,PatchTST,PatchTST,2317.8462844122023,4
+Electricity-CISO,168,mase,Chronos-2,Chronos-2,1.0456290699702353,1
+Electricity-CISO,168,mase,Naive,Naive,1.2337367306899345,2
+Electricity-CISO,168,mase,"Log weekly-difference ARIMA(2,0,2)",ARIMA/SARIMA,1.2339556904076512,3
+Electricity-CISO,168,mase,PatchTST,PatchTST,1.3202692332267414,4
+Electricity-CISO,168,rmse,Chronos-2,Chronos-2,2452.865333875125,1
+Electricity-CISO,168,rmse,PatchTST,PatchTST,2854.2630961774294,2
+Electricity-CISO,168,rmse,Naive,Naive,2859.051291200332,3
+Electricity-CISO,168,rmse,"Log weekly-difference ARIMA(2,0,2)",ARIMA/SARIMA,2859.5840540796353,4
+SPY,1,mae,Naive,Naive,3.127383222078022,1
+SPY,1,mae,"ARIMA(0,1,2)+drift",ARIMA/SARIMA,3.143754192074618,2
+SPY,1,mae,Chronos-2,Chronos-2,5.843833481638055,3
+SPY,1,mae,PatchTST,PatchTST,31.944188087864926,4
+SPY,1,mase,Naive,Naive,3.2317090261452557,1
+SPY,1,mase,"ARIMA(0,1,2)+drift",ARIMA/SARIMA,3.250326449745297,2
+SPY,1,mase,Chronos-2,Chronos-2,5.974448019071219,3
+SPY,1,mase,PatchTST,PatchTST,32.40558415534922,4
+SPY,1,rmse,Naive,Naive,4.358032489767754,1
+SPY,1,rmse,"ARIMA(0,1,2)+drift",ARIMA/SARIMA,4.373009479246446,2
+SPY,1,rmse,Chronos-2,Chronos-2,7.338591275692809,3
+SPY,1,rmse,PatchTST,PatchTST,37.37554821558554,4
+SPY,5,mae,"ARIMA(0,1,2)+drift",ARIMA/SARIMA,7.208609858795971,1
+SPY,5,mae,Naive,Naive,7.405818658126029,2
+SPY,5,mae,Chronos-2,Chronos-2,8.926361365067333,3
+SPY,5,mae,PatchTST,PatchTST,32.91617098356548,4
+SPY,5,mase,"ARIMA(0,1,2)+drift",ARIMA/SARIMA,7.34745617212971,1
+SPY,5,mase,Naive,Naive,7.553492791656237,2
+SPY,5,mase,Chronos-2,Chronos-2,9.11590232897657,3
+SPY,5,mase,PatchTST,PatchTST,33.39915182698858,4
+SPY,5,rmse,"ARIMA(0,1,2)+drift",ARIMA/SARIMA,10.079375006854594,1
+SPY,5,rmse,Naive,Naive,10.186579195654392,2
+SPY,5,rmse,Chronos-2,Chronos-2,11.60340537749513,3
+SPY,5,rmse,PatchTST,PatchTST,38.51698195995799,4
+SPY,20,mae,"ARIMA(0,1,2)+drift",ARIMA/SARIMA,14.7514987760316,1
+SPY,20,mae,Naive,Naive,15.74527238544665,2
+SPY,20,mae,Chronos-2,Chronos-2,16.519025501451996,3
+SPY,20,mae,PatchTST,PatchTST,35.832579241300884,4
+SPY,20,mase,"ARIMA(0,1,2)+drift",ARIMA/SARIMA,15.148208392291249,1
+SPY,20,mase,Naive,Naive,16.1738141396268,2
+SPY,20,mase,Chronos-2,Chronos-2,16.899740537586684,3
+SPY,20,mase,PatchTST,PatchTST,36.455032095977415,4
+SPY,20,rmse,"ARIMA(0,1,2)+drift",ARIMA/SARIMA,19.699481443502528,1
+SPY,20,rmse,Naive,Naive,20.36564306982636,2
+SPY,20,rmse,Chronos-2,Chronos-2,20.95182485248572,3
+SPY,20,rmse,PatchTST,PatchTST,41.89237976387586,4
