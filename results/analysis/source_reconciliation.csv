@@ -1,0 +1,13 @@
+dataset,model,source_file,n_rows,n_origins,max_actual_absolute_difference,max_origin_absolute_difference,max_mase_scale_absolute_difference,max_train_size_difference,timestamps_and_horizons_aligned,passed
+SPY,Naive,spy_classical_forecasts.csv,1140,380,2.842170943040401e-14,2.842170943040401e-14,2.220446049250313e-16,0,True,True
+SPY,"ARIMA(0,1,2)+drift",spy_classical_forecasts.csv,1140,380,2.842170943040401e-14,2.842170943040401e-14,2.220446049250313e-16,0,True,True
+SPY,Chronos-2,spy_chronos_forecasts.csv,1140,380,2.842170943040401e-14,2.842170943040401e-14,2.220446049250313e-16,0,True,True
+SPY,PatchTST,spy_patchtst_forecasts.csv,1140,380,5.684341886080802e-14,5.684341886080802e-14,2.220446049250313e-16,0,True,True
+Airline,Naive,airline_classical_forecasts.csv,39,13,0.0,0.0,3.552713678800501e-15,0,True,True
+Airline,"Log ARIMA(0,1,1)(0,1,1)[12]",airline_classical_forecasts.csv,39,13,0.0,0.0,3.552713678800501e-15,0,True,True
+Airline,Chronos-2,airline_chronos_forecasts.csv,39,13,0.0,0.0,3.552713678800501e-15,0,True,True
+Airline,PatchTST,airline_patchtst_forecasts.csv,39,13,0.0,0.0,7.105427357601002e-15,0,True,True
+Electricity-CISO,Naive,electricity_ciso_classical_forecasts.csv,252,84,0.0,0.0,2.2737367544323206e-13,0,True,True
+Electricity-CISO,"Log weekly-difference ARIMA(2,0,2)",electricity_ciso_classical_forecasts.csv,252,84,0.0,0.0,2.2737367544323206e-13,0,True,True
+Electricity-CISO,Chronos-2,electricity_ciso_chronos_forecasts.csv,252,84,0.0,0.0,2.2737367544323206e-13,0,True,True
+Electricity-CISO,PatchTST,electricity_ciso_patchtst_forecasts.csv,252,84,0.0,0.0,2.2737367544323206e-13,0,True,True

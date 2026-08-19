@@ -1,0 +1,5 @@
+dataset,selection_stage,training_end_exclusive,n_training_observations,model,p,d,q,trend,aic,bic,hqic,loglikelihood,converged,iterations,warnflag,fit_exception,aic_rank,bic_rank
+SPY,separate drift check,2019-01-01,6528,"ARIMA(0,1,2)+drift",0,1,2,t,-39767.19246629403,-39740.05765549949,-39757.809281986745,19887.596233147015,True,2,0,,1.0,2.0
+SPY,separate drift check,2019-01-01,6528,"ARIMA(0,1,2)",0,1,2,n,-39761.81502147547,-39741.463913379564,-39754.77763324501,19883.907510737736,True,2,0,,2.0,1.0
+SPY,separate drift check,2019-01-01,6528,"ARIMA(0,1,0)+drift",0,1,0,t,-39725.65834758159,-39712.090942184324,-39720.96675542795,19864.829173790797,True,7,0,,3.0,4.0
+SPY,separate drift check,2019-01-01,6528,"ARIMA(0,1,0)",0,1,0,n,-39721.95320863328,-39715.16950593464,-39719.607412556456,19861.97660431664,False,0,2,,4.0,3.0

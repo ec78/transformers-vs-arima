@@ -15,7 +15,7 @@ from src.final_analysis import (
 )
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_percentage_difference_sign_convention():
@@ -27,7 +27,6 @@ def test_percentage_difference_sign_convention():
 def test_dm_test_uses_pairing_hac_and_horizon_adjustment():
     errors_a = np.array([1.0, 1.2, 0.8, 1.1, 0.9, 1.3, 0.7, 1.0])
     errors_b = np.array([2.0, 2.1, 1.9, 2.2, 1.8, 2.3, 1.7, 2.0])
-
     result = diebold_mariano_test(
         errors_a=errors_a,
         errors_b=errors_b,
@@ -48,10 +47,7 @@ def test_frozen_contract_and_saved_metrics_match():
     forecasts = load_frozen_forecasts(PROJECT_ROOT)
     validation = validate_frozen_forecasts(forecasts)
     comparison = build_authoritative_comparison(forecasts)
-    metric_validation = validate_saved_metrics(
-        comparison,
-        PROJECT_ROOT,
-    )
+    metric_validation = validate_saved_metrics(comparison, PROJECT_ROOT)
 
     assert validation["passed"].all()
     assert metric_validation["passed"].all()
@@ -76,7 +72,5 @@ def test_relative_performance_and_rankings_are_metric_specific():
     assert "composite" not in rankings.columns
     assert set(win_counts["metric"]) == {"rmse", "mae", "mase"}
     assert len(win_counts) == 12
-    patchtst_wins = win_counts[
-        win_counts["model_family"] == "PatchTST"
-    ]
+    patchtst_wins = win_counts[win_counts["model_family"] == "PatchTST"]
     assert (patchtst_wins["n_dataset_horizon_wins"] == 0).all()

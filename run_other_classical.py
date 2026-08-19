@@ -120,23 +120,13 @@ def run_classical_dataset(
         mase_seasonality=mase_seasonality,
     )
 
-    initial_training_series = data[
-        "y"
-    ].iloc[
-        :initial_train_size
-    ]
-
     naive_summary = summarize_results(
         results=naive_results,
-        training_series=initial_training_series,
-        mase_seasonality=mase_seasonality,
         include_direction=True,
     )
 
     arima_summary = summarize_results(
         results=arima_results,
-        training_series=initial_training_series,
-        mase_seasonality=mase_seasonality,
         include_direction=True,
     )
 
@@ -299,7 +289,8 @@ def main():
 
     # A bounded p, q, P, Q in {0, 1} search on observations
     # before 1959 selected the canonical airline model by
-    # both AIC and BIC.
+    # both AIC and BIC. The candidate table is reproduced by
+    # reproduce_classical_selection.py.
     run_classical_dataset(
         data=airline,
         dataset_name="Airline",
@@ -338,8 +329,10 @@ def main():
 
     # A bounded p, q in {0, 1, 2} search on weekly log
     # differences before 2025 selected ARIMA(2,0,2) by both
-    # AIC and BIC. Weekly differencing retains the hourly
-    # data while handling the dominant hour-of-week pattern.
+    # AIC and BIC. The candidate table is reproduced by
+    # reproduce_classical_selection.py. Weekly differencing
+    # retains the hourly data while handling the dominant
+    # hour-of-week pattern.
     run_classical_dataset(
         data=electricity,
         dataset_name="Electricity-CISO",

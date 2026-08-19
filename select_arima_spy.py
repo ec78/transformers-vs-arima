@@ -1,4 +1,8 @@
-import warnings
+"""Historical first-stage SPY no-drift order grid.
+
+This script did not evaluate drift. See reproduce_classical_selection.py for
+the separate drift check and EXPERIMENT_CONTRACT.md for the selection record.
+"""
 
 import numpy as np
 import pandas as pd
@@ -80,18 +84,12 @@ for p in p_values:
 
             try:
 
-                with warnings.catch_warnings():
+                model = ARIMA(
+                    training_data,
+                    order=order,
+                )
 
-                    warnings.simplefilter(
-                        "ignore"
-                    )
-
-                    model = ARIMA(
-                        training_data,
-                        order=order,
-                    )
-
-                    fitted = model.fit()
+                fitted = model.fit()
 
                 results.append(
                     {

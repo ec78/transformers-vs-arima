@@ -727,11 +727,13 @@ def summarize_results(
         Output from walk_forward_evaluate().
 
     training_series : array-like or None
-        Training data used for MASE scaling.
-        If None, MASE is omitted.
+        Deprecated for walk-forward summaries. MASE must come
+        from origin-specific ``scaled_absolute_error`` values.
+        Passing a training series cannot enable a global scale.
 
     mase_seasonality : int, default=1
-        Seasonal lag for MASE.
+        Retained for API compatibility. Origin-specific MASE
+        seasonality is applied during walk_forward_evaluate().
 
     include_direction : bool, default=False
         If True, include directional accuracy.
@@ -814,11 +816,10 @@ def summarize_results(
 
         elif training_series is not None:
 
-            row["mase"] = mase(
-                actual=group["actual"],
-                forecast=group["forecast"],
-                training_series=training_series,
-                seasonality=mase_seasonality,
+            raise ValueError(
+                "Global MASE fallback is disabled for walk-forward "
+                "summaries. Store origin-specific "
+                "'scaled_absolute_error' values during evaluation."
             )
 
         # -------------------------------------------------

@@ -91,16 +91,6 @@ print(
 )
 
 
-# ---------------------------------------------------------
-# Initial training data for MASE
-# ---------------------------------------------------------
-
-initial_training_series = (
-    spy["y"]
-    .iloc[:initial_train_size]
-)
-
-
 # =========================================================
 # Naive model
 # =========================================================
@@ -124,8 +114,6 @@ naive_results = walk_forward_evaluate(
 
 naive_summary = summarize_results(
     results=naive_results,
-    training_series=initial_training_series,
-    mase_seasonality=1,
     include_direction=True,
 )
 
@@ -133,6 +121,11 @@ naive_summary = summarize_results(
 # =========================================================
 # ARIMA model
 # =========================================================
+
+# The historical two-stage search selected (0,1,2) from a
+# no-drift order grid, then AIC selected drift in a separate
+# four-model check. BIC preferred no drift. See
+# reproduce_classical_selection.py and EXPERIMENT_CONTRACT.md.
 
 print()
 print("=" * 60)
@@ -157,8 +150,6 @@ arima_results = walk_forward_evaluate(
 
 arima_summary = summarize_results(
     results=arima_results,
-    training_series=initial_training_series,
-    mase_seasonality=1,
     include_direction=True,
 )
 

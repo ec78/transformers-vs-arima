@@ -1,4 +1,7 @@
-import warnings
+"""Historical second-stage SPY drift check.
+
+AIC and BIC disagree on drift inclusion. See EXPERIMENT_CONTRACT.md.
+"""
 
 import pandas as pd
 
@@ -62,19 +65,13 @@ for spec in specifications:
         f"Estimating {spec['name']}..."
     )
 
-    with warnings.catch_warnings():
+    model = ARIMA(
+        training_data,
+        order=spec["order"],
+        trend=spec["trend"],
+    )
 
-        warnings.simplefilter(
-            "ignore"
-        )
-
-        model = ARIMA(
-            training_data,
-            order=spec["order"],
-            trend=spec["trend"],
-        )
-
-        fitted = model.fit()
+    fitted = model.fit()
 
     results.append(
         {

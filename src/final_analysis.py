@@ -257,7 +257,7 @@ def validate_frozen_forecasts(forecasts):
             ", ".join(sorted(data["model"].unique())),
         )
 
-        for model in expected_models:
+        for model in sorted(expected_models):
             group = data[data["model"] == model]
             origin_count = group["origin"].nunique()
             horizons = sorted(group["horizon"].unique().tolist())
@@ -289,7 +289,7 @@ def validate_frozen_forecasts(forecasts):
             "actual",
             "mase_scale",
         ]
-        for model in expected_models - {"Naive"}:
+        for model in sorted(expected_models - {"Naive"}):
             candidate = (
                 data[data["model"] == model]
                 .sort_values(["origin", "horizon"])
@@ -565,6 +565,8 @@ def diebold_mariano_test(
     effective_horizon = max(1, int(math.ceil(horizon / origin_step)))
     overlap_lag = max(0, effective_horizon - 1)
     automatic_lag = _newey_west_bandwidth(n_observations)
+    # A lag cannot exceed the number of available sample
+    # autocovariances. This cap is inert for the frozen tests.
     hac_lag = min(
         n_observations - 1,
         max(overlap_lag, automatic_lag),
@@ -891,6 +893,9 @@ def create_figures(comparison, relative, cost, figure_dir):
     import matplotlib
 
     matplotlib.use("Agg")
+    matplotlib.rcParams["svg.hashsalt"] = (
+        "transformers-vs-arima-frozen-analysis-v1"
+    )
     import matplotlib.pyplot as plt
 
     figure_dir = Path(figure_dir)
@@ -947,7 +952,22 @@ def create_figures(comparison, relative, cost, figure_dir):
                 path,
                 dpi=300 if extension == "png" else None,
                 bbox_inches="tight",
+                metadata=(
+                    {"Date": "2026-08-19"}
+                    if extension == "svg"
+                    else None
+                ),
             )
+            if extension == "svg":
+                content = path.read_text(encoding="utf-8")
+                path.write_text(
+                    "\n".join(
+                        line.rstrip()
+                        for line in content.splitlines()
+                    )
+                    + "\n",
+                    encoding="utf-8",
+                )
             created.append(path)
         plt.close(fig)
 
@@ -1030,7 +1050,22 @@ def create_figures(comparison, relative, cost, figure_dir):
             path,
             dpi=300 if extension == "png" else None,
             bbox_inches="tight",
+            metadata=(
+                {"Date": "2026-08-19"}
+                if extension == "svg"
+                else None
+            ),
         )
+        if extension == "svg":
+            content = path.read_text(encoding="utf-8")
+            path.write_text(
+                "\n".join(
+                    line.rstrip()
+                    for line in content.splitlines()
+                )
+                + "\n",
+                encoding="utf-8",
+            )
         created.append(path)
     plt.close(fig)
     return created
@@ -1061,11 +1096,12 @@ zero-change Naive forecasts. Percentage differences use
 The paired Diebold-Mariano comparisons use squared-error loss. The long-run
 variance uses a Bartlett/Newey-West HAC estimator. Its lag is the maximum of
 the overlap lag, `ceil(horizon / origin_step) - 1`, and the automatic bandwidth
-`floor(4 * (n / 100) ** (2 / 9))`. The statistic receives the
-Harvey-Leybourne-Newbold finite-sample adjustment using the horizon expressed
-in forecast-origin steps. Reported p-values are two-sided Student-t p-values
-with `n - 1` degrees of freedom. Holm-adjusted values account for the family of
-formal tests in the final analysis.
+`floor(4 * (n / 100) ** (2 / 9))`, capped at `n - 1` because only that many
+sample autocovariances exist. The cap does not bind in the frozen results. The
+statistic receives the Harvey-Leybourne-Newbold finite-sample adjustment using
+the horizon expressed in forecast-origin steps. Reported p-values are two-sided
+Student-t p-values with `n - 1` degrees of freedom. Holm-adjusted values account
+for the family of formal tests in the final analysis.
 
 The DM test is asymptotic and remains sensitive to bandwidth choice. Airline
 has only 13 origins, with severe overlap at longer horizons, so its comparisons

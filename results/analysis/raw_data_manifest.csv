@@ -1,0 +1,4 @@
+dataset,raw_file,metadata_file,sha256,hash_matches_contract,n_raw_rows,metadata_n_observations,snapshot_start,snapshot_end,download_date
+SPY,data\raw\spy.csv,data\raw\spy_metadata.json,08e394938b0a1eaece531abb7f3e79aa7d3e6db1f01a6e6696f76ec6209e5834,True,8444,8444,1993-01-29,2026-08-17,2026-08-17T17:58:10.070684
+Airline,data\raw\airline.csv,data\raw\airline_metadata.json,7cb940ddaba95d867d1e414d11b262bd966d884be229eb112779d3e8f06f44d9,True,144,144,1949-01-01,1960-12-01,2026-08-17T17:45:08.202654
+Electricity-CISO,data\raw\electricity_ciso.csv,data\raw\electricity_ciso_metadata.json,c89e1c6f771a7c80fac0c7c9793417380f2d225d13dd7592a5786e256aa47601,True,66841,66841,2019-01-01 00:00:00+00:00,2026-08-18 00:00:00+00:00,2026-08-17T17:50:54.180758
