@@ -1,5 +1,13 @@
 # transformers-vs-arima
 
+## Replication
+
+Start with [`replication/README.md`](replication/README.md). It contains
+clean-environment setup, a non-fitting validation path, an explicitly gated
+full experiment rerun, hardware notes, expected outputs, and success criteria.
+The authoritative raw snapshots are already committed under `data/raw`; do not
+refresh them when replicating the frozen experiment.
+
 ## Frozen experiment
 
 The dataset snapshots, evaluation windows, classical-selection evidence, retry

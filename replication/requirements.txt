@@ -1,0 +1,4 @@
+-r ../requirements-classical.txt
+-r ../requirements-analysis.txt
+-r ../requirements-transformer.txt
+-r ../requirements-patchtst.txt
